@@ -9,6 +9,7 @@ html {
     --col-3: #457EAC;
     --col-4: #632A50;
     --col-5: #E85D75;
+    --width: 200px;
     --altered-white: #e9eaec;
     background: var(--altered-white);
     font-family: "Roboto";
@@ -31,12 +32,19 @@ SIDE BAR STYLES
     /* Positioning and scaling the side tab. */
     top: 0;
     left: 0;
-    --width: 200px;
     width: var(--width);
     height: 100vh;
     /* Coloring/shading/box shadows for the side tab */
     background: var(--col-4);
     box-shadow: 1px 1px 0.5em 1px rgba(0, 0, 0, 0.5);
+}
+
+#body {
+    position: relative;
+    top: 0;
+    left: var(--width);
+    background: red;
+    z-index: 2;
 }
 
 #profile_pic {
