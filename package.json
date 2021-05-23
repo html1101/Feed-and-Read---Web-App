@@ -1,0 +1,27 @@
+{
+    "name": "feed-and-read",
+    "version": "1.0.0",
+    "description": "A simple learning management system for teachers.",
+    "main": "backend.js",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongodb": "^3.6.8",
+        "request": "^2.88.2"
+    },
+    "devDependencies": {},
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/html1101/Feed-and-Read---Web-App.git"
+    },
+    "keywords": [
+        "learning",
+        "teaching"
+    ],
+    "author": "Sarah Cross and Jasmine Hollis",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/html1101/Feed-and-Read---Web-App/issues"
+    },
+    "homepage": "https://github.com/html1101/Feed-and-Read---Web-App#readme"
+}
