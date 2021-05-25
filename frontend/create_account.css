@@ -3,10 +3,13 @@
 #background_img {
     background: url("background_signup.jpg") center;
     background-repeat: no-repeat;
+    background-size: cover;
+    /* auto 100vh */
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
+    --container-width: calc(0.5 * 650px);
     height: 100vh;
     filter: blur(5px);
     z-index: -1;
@@ -25,22 +28,17 @@
 
 /* Styles container over the background */
 
-#container,
-#container_can {
+#container {
     position: fixed;
-    width: 50%;
+    width: 325px;
     height: 70vh;
-    left: 50%;
+    left: 50vw;
+    margin-left: -162.5px !important;
     top: 50%;
     margin-top: -35vh;
-    margin-left: -25%;
     background: var(--altered-white);
     border-radius: 10px;
     box-shadow: 1px 1px 0.75em 1px rgba(0, 0, 0, 0.2);
-}
-
-#container_can {
-    z-index: 5;
 }
 
 
@@ -66,7 +64,12 @@
     --spacing: 0.3em;
 }
 
-#form_inf input {
+#form_inf .large {
+    height: 4em !important;
+}
+
+#form_inf input,
+#login_account_submit {
     position: relative;
     left: 3em;
     margin-left: calc(-1 * var(--spacing));
@@ -120,10 +123,14 @@
     color: red;
 }
 
-#create_account_submit {
+#login_account_submit {
+    margin-top: 2em;
+}
+
+#create_account_submit,
+#login_account_submit {
     border-radius: 20px;
     height: 2.5em !important;
-    margin-top: 0.25em;
     background: var(--col-2);
     --border-size: 5px;
     color: white;
@@ -134,7 +141,8 @@
     cursor: pointer;
 }
 
-#create_account_submit:hover {
+#create_account_submit:hover,
+#login_account_submit:hover {
     transition: 0.25s;
     border: calc(var(--border-size) / 2) solid var(--col-2) !important;
     background: white;
