@@ -5,8 +5,9 @@
     <title>Feed and Read - Create an Account</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="create_account.css">
+    <link rel="stylesheet" href="frontend/styles.css">
+    <link rel="stylesheet" href="frontend/create_account.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -22,8 +23,8 @@
             <input type="text" placeholder="Church Address" id="church_address" class="half left">
             <input type="text" placeholder="Username" id="username" class="half right">
             <input type="email" placeholder="Email" id="email" class="half left">
-            <input type="password" placeholder="Password" id="password">
-            <input type="password" placeholder="Confirm Password" id="conf_pass">
+            <input type="password" placeholder="Password" id="password" autocomplete>
+            <input type="password" placeholder="Confirm Password" id="conf_pass" autocomplete>
 
             <input type="submit" value="Create Account" id="create_account_submit">
             <div id="err"></div>

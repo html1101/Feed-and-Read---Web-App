@@ -37,7 +37,7 @@ app.get('/', function(req, res) {
 });
 
 // Now, when another file(filename) is being requested, give them the file inside the folder frontend(frontend/filename).
-app.get('/:filename', function(req, res) {
+app.get('/frontend/:filename', function(req, res) {
     // Make sure the filename doesn't contain ".."(the same as the command cd .., allows users to go backwards in the directory and access files they're not allowed to)
     filename = req.params.filename.split("..").join()
 
@@ -49,47 +49,51 @@ app.get('/:filename', function(req, res) {
 })
 
 jsonParse = bodyparse.json()
-    // Manage requests for login.
+
+// Manage requests for login.
 app.post("/request", jsonParse, function(req, res) {
     console.log(req.body)
         // Username is within req.body.username and password in req.body.password
-    console.log(hashIt(req.body.password))
+    username = req.body.username
+    hashed_password = hashIt(req.body.password)
+        // Now make a request to the 
 })
 
-
-// Connect the Express app to localhost:port.
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
-// app.use(app.router)
+const connect_pass = async(user) => {
+    return new Promise((resolve, reject) => {
+        let lineno = 0,
+            password = "",
+            hash = ""
+        rl.on("line", (line) => {
+            lineno++
+            if (lineno == 1) {
+                password = line
+                process.stdout.write("\nEnter hash for database: ")
+            }
+            if (lineno == 2) {
+                hash = line
+                let con = mysql.createConnection({
+                    host: `feed-and-read.${hash}.us-east-2.rds.amazonaws.com`,
+                    port: 3306,
+                    user: user,
+                    password: password,
+                    database: "Users"
+                })
+                con.connect((err) => {
+                    if (err) reject(`Error: ${err}`)
+                    resolve("Connected successfully with database.")
+                })
+            }
+        })
+    })
+}
 
 const connect_to_db = async() => {
     // Use input for password to user to unlock
-    let user = "admin",
-        lineno = 0,
-        password = "",
-        hash = ""
+    let user = "admin"
     process.stdout.write(`Enter database password for ${user}: `)
-    rl.on("line", (line) => {
-        lineno++
-        if (lineno == 1) {
-            password = line
-            process.stdout.write("\nEnter hash for database: ")
-        }
-        if (lineno == 2) {
-            hash = line
-            let con = mysql.createConnection({
-                host: `feed-and-read.${hash}.us-east-2.rds.amazonaws.com`,
-                port: 3306,
-                user: user,
-                password: password,
-                database: "Users"
-            })
-            con.connect((err) => {
-                if (err) throw err.sqlMessage
-                return 1
-            })
-        }
-    })
+    let result = await connect_pass(user)
+    return result
 }
 
 const query = async(query) => {
@@ -109,3 +113,11 @@ rl._writeToOutput = function _writeToOutput(stringToWrite) {
     } else
         rl.output.write(stringToWrite)
 };
+
+
+connect_to_db().then(() => {
+    // Connect the Express app to localhost:port AFTER connecting with database.
+    app.listen(port);
+    console.log('\nServer started at http://localhost:' + port);
+    // app.use(app.router)
+})

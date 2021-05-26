@@ -18,7 +18,7 @@ document.getElementById("login_account_submit").addEventListener("click", () => 
     let user = document.getElementById("username").value,
         pass = document.getElementById("password").value
 
-    xhttp.open("POST", `request`)
+    xhttp.open("POST", `/request`)
     xhttp.setRequestHeader("Content-Type", "application/json")
     xhttp.send(JSON.stringify({
         username: user,
