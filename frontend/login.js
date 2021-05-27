@@ -8,8 +8,7 @@ let resultX = ""
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        resultX = this.responseText
-        console.log(resultX)
+        console.log(this.responseText)
     }
 }
 

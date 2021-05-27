@@ -5,8 +5,8 @@
     <title>Feed and Read - Create an Account</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="frontend/styles.css">
-    <link rel="stylesheet" href="frontend/create_account.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="create_account.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
@@ -16,15 +16,15 @@
     <div id="container">
         <div id="top_title">Sign Up</div>
         <br>
-        <form action="action_page.php" id="form_inf">
-            <input type="text" placeholder="First Name" id="first_name" class="half right">
-            <input type="text" placeholder="Last Name" id="last_name" class="half left">
-            <input type="text" placeholder="Church Name" id="church_name" class="half right">
-            <input type="text" placeholder="Church Address" id="church_address" class="half left">
-            <input type="text" placeholder="Username" id="username" class="half right">
-            <input type="email" placeholder="Email" id="email" class="half left">
-            <input type="password" placeholder="Password" id="password" autocomplete>
-            <input type="password" placeholder="Confirm Password" id="conf_pass" autocomplete>
+        <form action="javascript:void(0);" id="form_inf">
+            <input type="text" placeholder="First Name" id="first_name" class="half right" required>
+            <input type="text" placeholder="Last Name" id="last_name" class="half left" required>
+            <input type="text" placeholder="Church Name" id="church_name" class="half right" required>
+            <input type="text" placeholder="Church Address" id="church_address" class="half left" required>
+            <input type="text" placeholder="Username" id="username" class="half right" required>
+            <input type="email" placeholder="Email" id="email" class="half left" required>
+            <input type="password" placeholder="Password" id="password" autocomplete required>
+            <input type="password" placeholder="Confirm Password" id="conf_pass" autocomplete required>
 
             <input type="submit" value="Create Account" id="create_account_submit">
             <div id="err"></div>
