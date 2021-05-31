@@ -8,7 +8,12 @@ let resultX = ""
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText)
+        // Returns result from sending username and password we're trying to login with
+        // If unsuccessful, return an error
+        if (this.responseText == "Login unsuccessful") {
+            document.getElementById("err").innerHTML = "ERROR: Login unsuccessful."
+            document.getElementById("password").value = ""
+        }
     }
 }
 

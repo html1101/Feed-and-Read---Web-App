@@ -3,7 +3,11 @@ let xhttp = new XMLHttpRequest()
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText)
+        // Will respond with an error if create account doesn't work
+        if(this.responseText !== "1") {
+            // Error: spit out to error element
+            document.getElementById("err").innerHTML = this.responseText
+        }
     }
 }
 
@@ -26,6 +30,7 @@ document.getElementById("form_inf").addEventListener("submit", () => {
             password: pass, // Will be transformed into a hashed password and stored by the DB
             first_name: document.getElementById("first_name").value,
             last_name: document.getElementById("last_name").value,
+            email: document.getElementById("email").value,
             church_name: document.getElementById("church_name").value,
             church_address: document.getElementById("church_address").value
         }))

@@ -48,6 +48,18 @@ app.get('/frontend/:filename', function(req, res) {
     res.sendFile(path.join(__dirname, `frontend/${filename}`))
 })
 
+// Same concept, but to access profile pictures
+app.get('/frontend/Profile_Pictures/:filename', function(req, res) {
+    // Make sure the filename doesn't contain ".."(the same as the command cd .., allows users to go backwards in the directory and access files they're not allowed to)
+    filename = req.params.filename.split("..").join()
+
+    // Set the MIME type(tells the browser whether it's an HTML, CSS, JS, ICO file, etc)
+    res.contentType(path.basename(filename))
+
+    // Send the file to the user
+    res.sendFile(path.join(__dirname, `frontend/Profile_Pictures/${filename}`))
+})
+
 jsonParse = bodyparse.json()
 
 // Manage requests for login.
@@ -59,12 +71,18 @@ app.post("/request", jsonParse, async(req, res) => {
     hashed_password = hashIt(req.body.password)
 
     // Now make a query to the database for users with this username
-    let result = await query(`SELECT hashed_password FROM UserTeachers WHERE username='${username}'`)
-    if (result[0].hashed_password == hashed_password) {
-        // User logged in correctly!
-        console.log("Logged in correctly!")
-        res.send("Login successful")
-    } else {
+    try {
+        let result = await query(`SELECT hashed_password FROM UserTeachers WHERE username='${username}'`)
+        if (result[0].hashed_password == hashed_password) {
+            // User logged in correctly!
+            console.log("Logged in correctly!")
+            res.send("Login successful")
+        } else {
+            console.log("Unsuccessful login.")
+            res.send("Login unsuccessful")
+        }
+    } catch (err) {
+        // If there was an error(ex. the username doesn't even exist)
         console.log("Unsuccessful login.")
         res.send("Login unsuccessful")
     }
@@ -79,12 +97,18 @@ app.post("/create_account", jsonParse, async(req, res) => {
     hashed_password = hashIt(req.body.password)
 
     // Read user data and make a query to the SQL schema
-    return new Promise((resolve, reject) => {
-        query(`INSERT INTO UserTeachers (username, first_name, last_name, church_name, church_address, hashed_password)
-    VALUES ('${req.body.username}', '${req.body.first_name}', '${req.body.last_name}', '${req.body.church_name}', '${req.body.church_address}', '${hashed_password}');`).then((val) => {
-            resolve(val)
-        })
-    })
+    try {
+        let result = await query(`INSERT INTO UserTeachers (username, first_name, last_name, church_name, church_address, hashed_password)
+    VALUES ('${req.body.username}', '${req.body.first_name}', '${req.body.last_name}', '${req.body.church_name}', '${req.body.church_address}', '${hashed_password}');`)
+        res.send("1")
+    } catch (err) {
+        // If there was an error(ex. the username doesn't even exist)
+        err = err.toString()
+        console.log(`Unsuccessful create account: ${err}`)
+        if(err.includes("ER_DUP_ENTRY")) {
+            res.send(`Create account unsuccessful: '${err.split(" key 'UserTeachers.")[1]} already taken.`)
+        }
+    }
 })
 
 // If any other requests are made, return 404.html.
@@ -96,7 +120,6 @@ app.use(function(req, res) {
 
 // Declare con as a global variable so it can be used in thw query and connection function
 let con
-
 
 // Connect to the database with an asyncronous function.
 const connect_pass = async(user) => {
